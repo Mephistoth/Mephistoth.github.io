@@ -3,114 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felipe Soto | Portfolio Developer</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Google Fonts & FontAwesome -->
+    <title>Felipe Soto — Backend & Full-Stack Developer</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://tailwindcss.com"></script>
+    <!-- Google Fonts: Inter para un look UI limpio -->
     <link href="https://googleapis.com" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #212529; }
-        .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 100px 0; }
-        .tech-badge { background-color: #e2e8f0; color: #334155; font-weight: 600; font-size: 0.85rem; padding: 5px 12px; border-radius: 20px; display: inline-block; margin: 4px; }
-        .project-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s; background: white; }
-        .project-card:hover { transform: translateY(-5px); }
-        .card-title { color: #0f172a; font-weight: 700; }
+        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .glass-card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(31, 41, 55, 0.6); backdrop-filter: blur(12px); }
+        .tech-tag { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #10b981; }
     </style>
 </head>
-<body>
+<body class="text-gray-300 selection:bg-emerald-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-    <!-- Hero Section -->
-    <header class="hero text-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-2">Felipe Soto</h1>
-            <p class="lead text-muted-50 mb-4" style="color: #cbd5e1;">Desarrollador Backend / Full-Stack Junior</p>
-            <div class="mb-4">
-                <span class="tech-badge" style="background:#38bdf8; color:#0f172a;">Python</span>
-                <span class="tech-badge" style="background:#38bdf8; color:#0f172a;">Django</span>
-                <span class="tech-badge" style="background:#38bdf8; color:#0f172a;">API REST</span>
-                <span class="tech-badge" style="background:#38bdf8; color:#0f172a;">PostgreSQL</span>
-                <span class="tech-badge" style="background:#38bdf8; color:#0f172a;">OpenCV</span>
-            </div>
-            <div>
-                <a href="https://linkedin.com" target="_blank" class="btn btn-outline-light mx-2"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="https://github.com" target="_blank" class="btn btn-outline-light mx-2"><i class="fab fa-github"></i> GitHub</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Sobre Mí -->
-    <section class="container my-5 py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-                <h2 class="fw-bold mb-3">Sobre Mí</h2>
-                <p class="lead text-muted fs-6">
-                    Analista Programador Computacional titulado de Duoc UC. Me especializo en el desarrollo backend enfocado en la creación de arquitecturas modulares, APIs robustas y automatización de procesos mediante visión artificial. Cuento con experiencia práctica integrando soluciones en la nube y trabajando bajo metodologías ágiles.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Proyectos Destacados -->
-    <section class="bg-light py-5">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-5">Proyectos Destacados</h2>
-            <div class="row g-4 justify-content-center">
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-6 py-16 md:py-24 w-full flex-grow">
+        
+        <!-- Header / Hero Section -->
+        <header class="mb-16">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">Felipe Soto</h1>
+                    <p class="text-lg md:text-xl text-emerald-400 code-font font-medium">&lt;Backend & Full-Stack Junior /&gt;</p>
+                    <p class="text-gray-400 mt-2 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-gray-500"></i> Viña del Mar, Chile
+                    </p>
+                </div>
                 
-                <!-- Proyecto 1: Bot Digimon -->
-                <div class="col-md-5">
-                    <div class="card h-100 project-card">
-                        <div class="card-body p-4 d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="card-title mb-0">BotIsométrico v2.8.1</h4>
-                                <span class="badge bg-success">Producción</span>
-                            </div>
-                            <p class="text-muted flex-grow-1">
-                                Bot de exploración isométrica y automatización reactiva de alto rendimiento basado en <strong>visión artificial en tiempo real</strong>. Diseñado con baja latencia (15ms) e inyección virtual de clics por hardware (ctypes) en segundo plano para emuladores.
-                            </p>
-                            <div class="mb-3">
-                                <span class="tech-badge">Python</span>
-                                <span class="tech-badge">OpenCV</span>
-                                <span class="tech-badge">pyautogui</span>
-                                <span class="tech-badge">ctypes</span>
-                            </div>
-                            <a href="https://github.com/BotDigimonUp" target="_blank" class="btn btn-primary w-100 mt-2"><i class="fab fa-github"></i> Ver Código Fuente</a>
+                <!-- Social Links Cortos y Elegantes -->
+                <div class="flex gap-4">
+                    <a href="https://github.com" target="_blank" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:felipeignacio28soto@gmail.com" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="Email">
+                        <i class="far fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Resumen / Acerca de mí -->
+        <section class="mb-16">
+            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-4 code-font">// Perfil Profesional</h2>
+            <p class="text-gray-400 leading-relaxed text-base md:text-lg">
+                Analista Programador Computacional titulado de Duoc UC. Especializado en ingeniería de backend, diseño de arquitecturas modulares y automatización de procesos mediante <span class="text-white font-medium">visión artificial en tiempo real</span>. Enfocado en construir APIs REST seguras, escalables y optimizar la persistencia de datos relacionales en entornos Cloud.
+            </p>
+        </section>
+
+        <!-- Stack Tecnológico Principal -->
+        <section class="mb-16">
+            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-4 code-font">// Core Stack</h2>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Python</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Django / DRF</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">API REST (JSON)</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">PostgreSQL</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">OpenCV</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Git & GitHub</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Render / Cloudinary</span>
+                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Scrum</span>
+            </div>
+        </section>
+
+        <!-- Sección de Proyectos Minimalistas -->
+        <section class="mb-16">
+            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-6 code-font">// Proyectos e Impacto</h2>
+            <div class="grid grid-cols-1 gap-6">
+                
+                <!-- Proyecto 1: BotDigimonUp -->
+                <div class="p-6 rounded-2xl glass-card hover:border-gray-700/80 transition-all duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-xs text-emerald-400 code-font mb-1 block">Proyecto Destacado / Automatización</span>
+                            <h3 class="text-xl font-bold text-white tracking-tight">Bot Isométrico v2.8.1 — Digimon UP</h3>
                         </div>
+                        <a href="https://github.com/BotDigimonUp" target="_blank" class="text-gray-500 hover:text-white transition-colors text-lg" title="Ver repositorio">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Software de automatización reactiva y enrutamiento inteligente basado en <strong class="text-gray-200 font-medium">procesamiento por visión artificial en tiempo real</strong>. Logra una ejecución de bajísima latencia (~15ms) e implementa inyección virtual de clics por hardware (ctypes) en segundo plano para emulación libre de bloqueos.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Python</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">OpenCV</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">ctypes</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Retro-engineering</span>
                     </div>
                 </div>
 
                 <!-- Proyecto 2: Práctica Permify -->
-                <div class="col-md-5">
-                    <div class="card h-100 project-card">
-                        <div class="card-body p-4 d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="card-title mb-0">Plataforma CCM & Analítica</h4>
-                                <span class="badge bg-secondary">Permify.cl</span>
-                            </div>
-                            <p class="text-muted flex-grow-1">
-                                Co-desarrollo de una plataforma web para la automatización, analítica y gestión de flujos industriales. Implementación de una API REST para exposición segura de datos estructurados e integración de un panel de métricas con control de acceso corporativo.
-                            </p>
-                            <div class="mb-3">
-                                <span class="tech-badge">Django</span>
-                                <span class="tech-badge">DRF (API)</span>
-                                <span class="tech-badge">PostgreSQL</span>
-                                <span class="tech-badge">Render</span>
-                            </div>
-                            <span class="text-muted small text-center d-block mt-3"><i class="fas fa-lock"></i> Código Privado corporativo</span>
+                <div class="p-6 rounded-2xl glass-card hover:border-gray-700/80 transition-all duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-xs text-gray-500 code-font mb-1 block">Práctica Profesional / Agencia Digital</span>
+                            <h3 class="text-xl font-bold text-white tracking-tight">Plataforma CCM & Analítica Industrial</h3>
                         </div>
+                        <span class="text-xs font-semibold px-2 py-1 bg-gray-800 rounded-md text-gray-400 code-font" title="Propiedad de permify.cl"><i class="fas fa-lock text-[10px]"></i> Privado</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Co-desarrollo de la arquitectura modular (MVT) para un sistema web corporativo enfocado en automatización y simulación de ciclos de producción industriales. Diseño de endpoints en Django REST Framework para consumo estructurado (JSON) y optimización del backend.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Django</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">PostgreSQL</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Render Cloud</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Agile/Scrum</span>
                     </div>
                 </div>
 
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="text-center py-4 bg-dark text-white-50 mt-5">
-        <p class="mb-0">&copy; 2026 Felipe Soto. Desarrollado con Bootstrap 5.</p>
+    </main>
+
+    <!-- Footer Minimalista -->
+    <footer class="max-w-4xl mx-auto px-6 py-8 w-full border-t border-gray-900/60 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600 gap-2">
+        <p class="code-font">&copy; 2026 Felipe Soto. All rights reserved.</p>
+        <p>Built with Tailwind CSS & Inter Font</p>
     </footer>
 
-    <!-- Bootstrap Bundle JS -->
-    <script src="https://jsdelivr.net"></script>
 </body>
 </html>
