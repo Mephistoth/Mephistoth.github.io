@@ -42,6 +42,7 @@
     font-size: 1.0625rem;
     line-height: 1.6;
   }
+  ::selection { background: var(--arena); color: var(--mar); }
   [hidden] { display: none !important; }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--arena); outline-offset: 3px; border-radius: 4px; }
@@ -49,32 +50,56 @@
   .skip {
     position: absolute; left: 1rem; top: -4rem;
     background: var(--arena); color: var(--mar);
-    padding: .6rem 1rem; border-radius: 6px; font-weight: 600; z-index: 10;
+    padding: .6rem 1rem; border-radius: 6px; font-weight: 600; z-index: 50;
   }
   .skip:focus { top: 1rem; }
 
   .wrap { width: min(72rem, 100% - 3rem); margin-inline: auto; }
 
-  /* Encabezado */
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 0; }
-  .mark { font-family: var(--display); font-weight: 700; font-size: 1.15rem; text-decoration: none; }
-  .top nav { display: flex; gap: 1.75rem; }
-  .top nav a { color: var(--bruma); text-decoration: none; font-size: .97rem; }
-  .top nav a:hover { color: var(--espuma); }
+  /* Barra de avance de lectura */
+  .progreso { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 40; pointer-events: none; }
+  .progreso span { display: block; height: 100%; background: var(--arena); transform: scaleX(0); transform-origin: left; }
 
-  /* Hero */
+  /* Encabezado fijo */
+  .top {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(11, 34, 48, .88);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
+  .mark { font-family: var(--display); font-weight: 700; font-size: 1.15rem; text-decoration: none; white-space: nowrap; }
+  .top nav { display: flex; gap: 1.5rem; overflow-x: auto; }
+  .top nav a {
+    color: var(--bruma); text-decoration: none; font-size: .95rem; white-space: nowrap;
+    padding: .25rem 0; border-bottom: 2px solid transparent;
+  }
+  .top nav a:hover { color: var(--espuma); }
+  .top nav a[aria-current="true"] { color: var(--espuma); border-bottom-color: var(--arena); }
+  @media (max-width: 40rem) { .top .wrap { flex-direction: column; align-items: flex-start; gap: .5rem; } }
+
+  section, .hero { scroll-margin-top: 5rem; }
+
+  /* Portada */
   .hero { display: grid; gap: 3rem; padding: 3rem 0 5rem; align-items: center; }
   @media (min-width: 62rem) { .hero { grid-template-columns: 1.05fr 1fr; gap: 4rem; padding-top: 4.5rem; } }
 
   h1 {
-    margin: 0 0 1.25rem;
+    margin: 0 0 .75rem;
     font-family: var(--display);
     font-weight: 800;
     font-size: clamp(3.25rem, 9vw, 6.25rem);
     line-height: .95;
     letter-spacing: -.035em;
   }
-  .lead { margin: 0 0 1rem; max-width: 30em; font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.4; }
+  .cargo { margin: 0 0 1.5rem; font-family: var(--display); font-weight: 500; font-size: clamp(1.15rem, 2.4vw, 1.5rem); color: var(--arena); }
+  .lead { margin: 0 0 1.25rem; max-width: 32em; font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.5; }
+  .estado-disp { display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 .75rem; font-weight: 600; font-size: .98rem; }
+  .punto { width: .6rem; height: .6rem; border-radius: 50%; background: var(--agua); flex: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .punto { animation: pulso 2.4s ease-out infinite; }
+    @keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(155, 224, 207, .55); } 70%, 100% { box-shadow: 0 0 0 .6rem rgba(155, 224, 207, 0); } }
+  }
   .avail { margin: 0 0 2rem; max-width: 34em; color: var(--bruma); }
 
   .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
@@ -88,7 +113,7 @@
   .btn.principal { background: var(--arena); color: var(--mar); border-color: var(--arena); }
   .btn.principal:hover { background: var(--espuma); border-color: var(--espuma); color: var(--mar); }
 
-  /* Respuesta de API (el momento memorable) */
+  /* Respuesta de API */
   .api { background: var(--roca); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; min-width: 0; }
   .tabs { display: flex; gap: .25rem; padding: .6rem .6rem 0; border-bottom: 1px solid var(--linea); overflow-x: auto; }
   .tabs button {
@@ -99,13 +124,18 @@
   .tabs button:hover { color: var(--espuma); }
   .tabs button[aria-selected="true"] { color: var(--arena); border-bottom-color: var(--arena); }
   .req { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem 1.1rem; font: 400 .85rem var(--codigo); color: var(--bruma); border-bottom: 1px solid var(--linea); }
-  .req .estado { color: var(--agua); }
-  pre.json { margin: 0; padding: 1.1rem 1.1rem 1.4rem; overflow-x: auto; font: 400 .9rem/1.7 var(--codigo); color: var(--espuma); tab-size: 2; }
+  .req .estado { color: var(--agua); white-space: nowrap; }
+  pre.json {
+    margin: 0; padding: 1.1rem 1.1rem 1.4rem;
+    font: 400 .9rem/1.7 var(--codigo); color: var(--espuma); tab-size: 2;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+  }
   .json .k { color: var(--arena); }
   .json .s { color: var(--agua); }
   .json .p { color: #6f8f98; }
   .json a { color: var(--agua); text-decoration-color: #4a8a86; text-underline-offset: 3px; }
   .json a:hover { color: var(--espuma); }
+  .pie-api { margin: 0; padding: .8rem 1.1rem; border-top: 1px solid var(--linea); color: var(--bruma); font-size: .88rem; }
 
   @media (prefers-reduced-motion: no-preference) {
     .carga .linea { opacity: 0; transform: translateY(4px); animation: aparece .4s ease-out forwards; animation-delay: calc(var(--i) * 75ms + 350ms); }
@@ -113,40 +143,50 @@
   }
 
   /* Secciones */
-  section { padding: 3.5rem 0; border-top: 1px solid var(--linea); }
-  h2 { margin: 0 0 2rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.75rem, 3.5vw, 2.4rem); letter-spacing: -.02em; line-height: 1.1; }
+  section { padding: 4rem 0; border-top: 1px solid var(--linea); }
+  h2 { margin: 0 0 2rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 3.8vw, 2.6rem); letter-spacing: -.02em; line-height: 1.1; }
   h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em; }
 
-  /* Trayectoria: una secuencia real, por eso va como línea de tiempo */
-  .linea-tiempo { list-style: none; margin: 0; padding: 0; }
-  .linea-tiempo li { display: grid; gap: .35rem 2.5rem; padding: 0 0 2.5rem 1.5rem; border-left: 1px solid var(--linea); position: relative; }
-  .linea-tiempo li:last-child { padding-bottom: 0; }
-  .linea-tiempo li::before { content: ""; position: absolute; left: -5px; top: .55rem; width: 9px; height: 9px; border-radius: 50%; background: var(--arena); }
-  @media (min-width: 48rem) { .linea-tiempo li { grid-template-columns: 11rem 1fr; } }
-  .fecha { color: var(--bruma); font-size: .95rem; padding-top: .2rem; }
-  .linea-tiempo .donde { margin: .1rem 0 .75rem; color: var(--bruma); }
-  .linea-tiempo ul { margin: 0; padding-left: 1.15rem; max-width: 46rem; }
-  .linea-tiempo ul li { display: list-item; padding: 0 0 .4rem; border: 0; position: static; grid-template-columns: none; }
-  .linea-tiempo ul li::before { content: none; }
-  .linea-tiempo ul li::marker { color: var(--arena); }
+  /* Sobre mí */
+  .sobre { display: grid; gap: 2rem 4rem; }
+  @media (min-width: 56rem) { .sobre { grid-template-columns: 1.2fr 1fr; } }
+  .sobre h2 { margin-bottom: 1.25rem; }
+  .sobre p { margin: 0 0 1rem; max-width: 36rem; }
+  .datos { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--linea); align-self: start; }
+  .datos div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--linea); }
+  .datos dt { color: var(--bruma); font-size: .95rem; }
+  .datos dd { margin: 0; }
 
-  /* Proyectos */
-  .destacado { background: var(--roca); border: 1px solid var(--linea); border-radius: 14px; padding: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
-  .destacado h3 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: .75rem; }
-  .destacado p { margin: 0 0 1.25rem; max-width: 40rem; }
+  /* Trayectoria */
+  .linea-tiempo { list-style: none; margin: 0; padding: 0; }
+  .linea-tiempo > li { display: grid; gap: .35rem 2.5rem; padding: 0 0 2.5rem 1.5rem; border-left: 1px solid var(--linea); position: relative; }
+  .linea-tiempo > li:last-child { padding-bottom: 0; }
+  .linea-tiempo > li::before { content: ""; position: absolute; left: -5px; top: .55rem; width: 9px; height: 9px; border-radius: 50%; background: var(--arena); }
+  @media (min-width: 48rem) { .linea-tiempo > li { grid-template-columns: 11rem 1fr; } }
+  .fecha { color: var(--bruma); font-size: .95rem; padding-top: .2rem; }
+  .linea-tiempo .donde { margin: .1rem 0 .5rem; color: var(--bruma); }
+  .linea-tiempo p:last-child { margin: 0; max-width: 42rem; }
+
+  /* Proyectos: los tres con el mismo formato */
+  .proyectos { display: grid; gap: 1.5rem; }
+  .proyecto {
+    display: grid; gap: 1.25rem 3rem;
+    background: var(--roca); border: 1px solid var(--linea); border-radius: 14px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  @media (min-width: 56rem) { .proyecto { grid-template-columns: 16rem 1fr; } }
+  .proyecto h3 { font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.15; margin-bottom: .6rem; }
+  .proyecto .meta { margin: 0; color: var(--bruma); font-size: .95rem; }
+  .proyecto .resumen { margin: 0 0 1rem; max-width: 40rem; font-size: 1.1rem; }
+  .proyecto .puntos { margin: 0 0 1.5rem; padding-left: 1.15rem; max-width: 40rem; color: var(--bruma); }
+  .proyecto .puntos li { padding-bottom: .4rem; }
+  .proyecto .puntos li::marker { color: var(--arena); }
   .stack { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin: 0 0 1.5rem; padding: 0; }
   .stack li { font: 400 .82rem var(--codigo); color: var(--agua); border: 1px solid var(--linea); border-radius: 6px; padding: .2rem .6rem; }
   .enlace { color: var(--arena); font-weight: 600; text-underline-offset: 4px; }
   .enlace:hover { color: var(--espuma); }
 
-  .filas { list-style: none; margin: 0; padding: 0; }
-  .filas li { display: grid; gap: .5rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--linea); }
-  .filas li:first-child { border-top: 1px solid var(--linea); }
-  @media (min-width: 48rem) { .filas li { grid-template-columns: 16rem 1fr auto; align-items: start; } }
-  .filas p { margin: 0; color: var(--bruma); max-width: 36rem; }
-  .filas .stack { margin: .75rem 0 0; }
-
-  /* Herramientas */
+  /* Tecnologías */
   .grupos { display: grid; gap: 2rem 3rem; }
   @media (min-width: 48rem) { .grupos { grid-template-columns: 1fr 1fr; } }
   .grupos h3 { font-size: 1.1rem; margin-bottom: .35rem; }
@@ -154,41 +194,63 @@
   .grupos .stack { margin: 0; }
 
   /* Contacto */
-  .contacto p { max-width: 34rem; margin: 0 0 2rem; font-size: 1.15rem; }
+  .intro-contacto { max-width: 36rem; margin: 0 0 2rem; font-size: 1.15rem; }
+  .intro-contacto a { color: var(--arena); text-underline-offset: 4px; }
+  .tarjetas { display: grid; gap: 1rem; }
+  @media (min-width: 56rem) { .tarjetas { grid-template-columns: repeat(3, 1fr); } }
+  .tarjeta {
+    display: grid; grid-template-columns: auto 1fr; gap: 0 1rem; align-items: start;
+    background: var(--roca); border: 1px solid var(--linea); border-radius: 14px;
+    padding: 1.5rem; text-decoration: none; min-width: 0;
+    transition: border-color .2s;
+  }
+  .tarjeta:hover { border-color: var(--arena); }
+  .tarjeta svg { width: 2rem; height: 2rem; color: var(--arena); margin-top: .1rem; }
+  .tarjeta .etq { display: block; font-family: var(--display); font-weight: 700; font-size: 1.25rem; }
+  .tarjeta .valor { display: block; margin: .35rem 0 .5rem; font: 400 .88rem var(--codigo); color: var(--agua); overflow-wrap: anywhere; }
+  .tarjeta .desc { display: block; color: var(--bruma); font-size: .95rem; }
 
-  footer { border-top: 1px solid var(--linea); padding: 2rem 0 3rem; color: var(--bruma); font-size: .92rem; }
+  /* Pie */
+  footer { border-top: 1px solid var(--linea); padding: 3rem 0 3rem; }
+  .firma { margin: 0 0 .75rem; font-family: var(--display); font-weight: 800; font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1; letter-spacing: -.03em; }
+  footer .derechos { margin: 0; color: var(--bruma); font-size: .92rem; }
 </style>
 </head>
 
 <body>
 <a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="progreso" aria-hidden="true"><span id="barra"></span></div>
 
-<div class="wrap">
-  <header class="top">
-    <a class="mark" href="#">Felipe Soto</a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#inicio">Felipe Soto</a>
     <nav aria-label="Principal">
+      <a href="#sobre-mi">Sobre mí</a>
       <a href="#trayectoria">Trayectoria</a>
       <a href="#proyectos">Proyectos</a>
-      <a href="#herramientas">Herramientas</a>
+      <a href="#tecnologias">Tecnologías</a>
       <a href="#contacto">Contacto</a>
     </nav>
-  </header>
+  </div>
+</header>
 
+<div class="wrap">
   <main id="contenido">
-    <div class="hero">
+    <div class="hero" id="inicio">
       <div>
         <h1>Felipe Soto</h1>
-        <p class="lead">Desarrollo backend con Python y Django: APIs REST, bases de datos relacionales y despliegue en la nube.</p>
-        <p class="avail">Analista Programador titulado de Duoc UC, con práctica profesional como desarrollador full-stack. Disponible de inmediato, en Viña del Mar o en remoto.</p>
+        <p class="cargo">Desarrollador Backend / Full-Stack Junior</p>
+        <p class="lead">Desarrollo aplicaciones web con Python y Django: APIs REST, bases de datos relacionales y despliegue en la nube.</p>
+        <p class="estado-disp"><span class="punto" aria-hidden="true"></span>Disponible de inmediato</p>
+        <p class="avail">Analista Programador titulado de Duoc UC, con práctica profesional como desarrollador full-stack. Vivo en Viña del Mar y trabajo en remoto o de forma presencial en la zona.</p>
         <div class="actions">
           <a class="btn principal" href="#proyectos">Ver proyectos</a>
-          <a class="btn" href="CV_Felipe_Soto_2026.pdf" download>Descargar CV</a>
-          <a class="btn" href="mailto:felipeignacio28soto@gmail.com">Escribirme</a>
+          <a class="btn" href="#contacto">Contactarme</a>
         </div>
       </div>
 
       <div class="api" role="group" aria-label="Mis datos como respuesta de una API">
-        <div class="tabs" role="tablist" aria-label="Endpoints">
+        <div class="tabs" role="tablist" aria-label="Secciones de la respuesta">
           <button role="tab" id="t-perfil" aria-selected="true" aria-controls="p-perfil" data-ruta="/api/felipe/perfil">/perfil</button>
           <button role="tab" id="t-stack" aria-selected="false" aria-controls="p-stack" tabindex="-1" data-ruta="/api/felipe/stack">/stack</button>
           <button role="tab" id="t-contacto" aria-selected="false" aria-controls="p-contacto" tabindex="-1" data-ruta="/api/felipe/contacto">/contacto</button>
@@ -217,10 +279,28 @@
   <span class="k">"email"</span><span class="p">:</span> <span class="s">"<a href="mailto:felipeignacio28soto@gmail.com">felipeignacio28soto@gmail.com</a>"</span><span class="p">,</span>
   <span class="k">"linkedin"</span><span class="p">:</span> <span class="s">"<a href="https://www.linkedin.com/in/felipe-soto-908077369/" target="_blank" rel="noopener">linkedin.com/in/felipe-soto-908077369</a>"</span><span class="p">,</span>
   <span class="k">"github"</span><span class="p">:</span> <span class="s">"<a href="https://github.com/Mephistoth" target="_blank" rel="noopener">github.com/Mephistoth</a>"</span><span class="p">,</span>
-  <span class="k">"cv"</span><span class="p">:</span> <span class="s">"<a href="CV_Felipe_Soto_2026.pdf" download>CV_Felipe_Soto_2026.pdf</a>"</span>
+  <span class="k">"cv"</span><span class="p">:</span> <span class="s">"disponible por solicitud"</span>
 <span class="p">}</span></pre>
+        <p class="pie-api">Mis datos presentados como la respuesta de una API REST.</p>
       </div>
     </div>
+
+    <section id="sobre-mi">
+      <div class="sobre">
+        <div>
+          <h2>Sobre mí</h2>
+          <p>Soy Analista Programador titulado de Duoc UC y vivo en Viña del Mar. Me enfoco en el lado del servidor: modelar los datos, exponerlos mediante APIs y dejar las aplicaciones funcionando en la nube.</p>
+          <p>Hice mi práctica profesional como desarrollador full-stack en remoto, y fuera de la carrera he seguido construyendo proyectos propios de automatización con Python y visión por computador.</p>
+        </div>
+        <dl class="datos">
+          <div><dt>Ubicación</dt><dd>Viña del Mar, Chile</dd></div>
+          <div><dt>Disponibilidad</dt><dd>Inmediata</dd></div>
+          <div><dt>Modalidad</dt><dd>Remoto, o presencial en Viña del Mar y Valparaíso</dd></div>
+          <div><dt>Formación</dt><dd>Analista Programador Computacional, Duoc UC (2025)</dd></div>
+          <div><dt>Idiomas</dt><dd>Español nativo, inglés intermedio</dd></div>
+        </dl>
+      </div>
+    </section>
 
     <section id="trayectoria">
       <h2>Trayectoria</h2>
@@ -230,24 +310,15 @@
           <div>
             <h3>Desarrollador Full-Stack, práctica profesional</h3>
             <p class="donde">Permify, en remoto</p>
-            <ul>
-              <li>Desarrollé una plataforma web en Django para automatizar, simular y gestionar ciclos de producción industriales.</li>
-              <li>Implementé una API REST con Django REST Framework que entrega datos en JSON a integraciones externas y futuras aplicaciones móviles.</li>
-              <li>Construí un panel de administración con métricas, autenticación segura y gestión de perfiles de usuario.</li>
-              <li>Desarrollé un módulo en Python que automatiza procesos internos, con el código organizado en arquitectura modular MVT.</li>
-            </ul>
+            <p>Desarrollo full-stack con Django y Django REST Framework: API REST, panel de administración y módulo de automatización.</p>
           </div>
         </li>
         <li>
           <span class="fecha">Mar 2025 – Jul 2025</span>
           <div>
-            <h3>Proyecto de título: El Club del Gran Gusano</h3>
+            <h3>Proyecto de título</h3>
             <p class="donde">Duoc UC, Viña del Mar</p>
-            <ul>
-              <li>Desarrollé en equipo una aplicación web con Django, con registro y login, CRUD, chat y chatbot.</li>
-              <li>Diseñé la base de datos en PostgreSQL, integré Cloudinary para las imágenes y desplegué en Render.</li>
-              <li>Trabajé con Scrum y Git/GitHub: más de 30 commits y pull requests.</li>
-            </ul>
+            <p>Aplicación web en equipo con Django, PostgreSQL y despliegue en Render, con metodología Scrum.</p>
           </div>
         </li>
         <li>
@@ -255,10 +326,7 @@
           <div>
             <h3>Analista Programador Computacional</h3>
             <p class="donde">Duoc UC, Técnico de Nivel Superior</p>
-            <ul>
-              <li>Módulos certificados: Arquitectura de Software, Calidad de Software, Modelos de Datos, Programación de Software y Análisis de Requerimientos.</li>
-              <li>Inglés intermedio certificado.</li>
-            </ul>
+            <p>Módulos certificados: Arquitectura de Software, Calidad de Software, Modelos de Datos, Programación de Software y Análisis de Requerimientos. Inglés intermedio certificado.</p>
           </div>
         </li>
       </ol>
@@ -266,38 +334,68 @@
 
     <section id="proyectos">
       <h2>Proyectos</h2>
+      <div class="proyectos">
 
-      <article class="destacado">
-        <h3>Ciclo-Circular</h3>
-        <p>Plataforma web para automatizar, simular y gestionar ciclos de producción industriales. La desarrollé durante mi práctica profesional, con una API REST, un panel de administración y un módulo de automatización en Python.</p>
-        <ul class="stack" aria-label="Tecnologías">
-          <li>Python</li><li>Django</li><li>Django REST Framework</li><li>API REST</li>
-        </ul>
-        <a class="enlace" href="https://github.com/Mephistoth/Ciclo-Circular" target="_blank" rel="noopener">Ver el código en GitHub</a>
-      </article>
-
-      <ul class="filas">
-        <li>
-          <h3>El Club del Gran Gusano</h3>
+        <article class="proyecto">
           <div>
-            <p>Aplicación web hecha en equipo con registro y login, CRUD, chat y chatbot. Desplegada en Render.</p>
-            <ul class="stack" aria-label="Tecnologías"><li>Django</li><li>PostgreSQL</li><li>Cloudinary</li><li>Render</li></ul>
+            <h3>Ciclo-Circular</h3>
+            <p class="meta">Práctica profesional en Permify</p>
+            <p class="meta">Oct 2025 – Dic 2025</p>
           </div>
-          <a class="enlace" href="https://github.com/Mephistoth/ClubDelGranGusano" target="_blank" rel="noopener">Ver código</a>
-        </li>
-        <li>
-          <h3>Bot de automatización con visión por computador</h3>
           <div>
-            <p>Un bot que lee la pantalla con OpenCV, decide la siguiente acción y la ejecuta. Lo he mejorado en varias versiones para que sea más rápido y más estable.</p>
+            <p class="resumen">Plataforma web para automatizar, simular y gestionar ciclos de producción industriales.</p>
+            <ul class="puntos">
+              <li>API REST con Django REST Framework que entrega datos en JSON a integraciones externas y futuras aplicaciones móviles.</li>
+              <li>Panel de administración con métricas, autenticación segura y gestión de perfiles de usuario.</li>
+              <li>Módulo en Python que automatiza procesos internos, con arquitectura modular MVT.</li>
+            </ul>
+            <ul class="stack" aria-label="Tecnologías"><li>Python</li><li>Django</li><li>Django REST Framework</li><li>API REST</li></ul>
+            <a class="enlace" href="https://github.com/Mephistoth/Ciclo-Circular" target="_blank" rel="noopener">Ver el código en GitHub</a>
+          </div>
+        </article>
+
+        <article class="proyecto">
+          <div>
+            <h3>El Club del Gran Gusano</h3>
+            <p class="meta">Proyecto de título, Duoc UC</p>
+            <p class="meta">Mar 2025 – Jul 2025</p>
+            <p class="meta">Trabajo en equipo con Scrum</p>
+          </div>
+          <div>
+            <p class="resumen">Aplicación web desarrollada en equipo y desplegada en la nube.</p>
+            <ul class="puntos">
+              <li>Registro y login de usuarios, CRUD y módulos de chat y chatbot.</li>
+              <li>Base de datos en PostgreSQL y subida de imágenes con Cloudinary.</li>
+              <li>Despliegue en Render, con más de 30 commits y pull requests en GitHub.</li>
+            </ul>
+            <ul class="stack" aria-label="Tecnologías"><li>Python</li><li>Django</li><li>PostgreSQL</li><li>Cloudinary</li><li>Render</li><li>Git</li></ul>
+            <a class="enlace" href="https://github.com/Mephistoth/ClubDelGranGusano" target="_blank" rel="noopener">Ver el código en GitHub</a>
+          </div>
+        </article>
+
+        <article class="proyecto">
+          <div>
+            <h3>Bot de automatización con visión por computador</h3>
+            <p class="meta">Proyecto personal</p>
+            <p class="meta">En mejora continua</p>
+          </div>
+          <div>
+            <p class="resumen">Bot que lee la pantalla, decide la siguiente acción y la ejecuta de forma automática.</p>
+            <ul class="puntos">
+              <li>Detección de elementos en pantalla con OpenCV.</li>
+              <li>Automatización de acciones con pyautogui.</li>
+              <li>Mejorado en varias versiones: lógica de decisión más clara y ejecución más rápida.</li>
+            </ul>
             <ul class="stack" aria-label="Tecnologías"><li>Python</li><li>OpenCV</li><li>pyautogui</li></ul>
+            <a class="enlace" href="https://github.com/Mephistoth/BotDigimonUp" target="_blank" rel="noopener">Ver el código en GitHub</a>
           </div>
-          <a class="enlace" href="https://github.com/Mephistoth/BotDigimonUp" target="_blank" rel="noopener">Ver código</a>
-        </li>
-      </ul>
+        </article>
+
+      </div>
     </section>
 
-    <section id="herramientas">
-      <h2>Herramientas</h2>
+    <section id="tecnologias">
+      <h2>Tecnologías</h2>
       <div class="grupos">
         <div>
           <h3>Con las que trabajo a diario</h3>
@@ -312,25 +410,53 @@
       </div>
     </section>
 
-    <section id="contacto" class="contacto">
+    <section id="contacto">
       <h2>Contacto</h2>
-      <p>Busco mi primera oportunidad como desarrollador junior. Si tienes una vacante o un proyecto, escríbeme y respondo pronto.</p>
-      <div class="actions">
-        <a class="btn principal" href="mailto:felipeignacio28soto@gmail.com">Escribirme un correo</a>
-        <a class="btn" href="https://www.linkedin.com/in/felipe-soto-908077369/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="https://github.com/Mephistoth" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="CV_Felipe_Soto_2026.pdf" download>Descargar CV</a>
+      <p class="intro-contacto">Busco mi primera oportunidad como desarrollador junior. Si tienes una vacante o un proyecto, escríbeme. Si necesitas mi CV, <a href="mailto:felipeignacio28soto@gmail.com?subject=Solicitud%20de%20CV">pídemelo por correo</a> y te lo envío.</p>
+      <div class="tarjetas">
+
+        <a class="tarjeta" href="mailto:felipeignacio28soto@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>
+          <span>
+            <span class="etq">Correo</span>
+            <span class="valor">felipeignacio28soto@gmail.com</span>
+            <span class="desc">Para vacantes y proyectos</span>
+          </span>
+        </a>
+
+        <a class="tarjeta" href="https://www.linkedin.com/in/felipe-soto-908077369/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.8v.01M12 16v-5.5M12 13c0-1.6 1-2.6 2.4-2.6S16.5 11.4 16.5 13V16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>
+            <span class="etq">LinkedIn</span>
+            <span class="valor">linkedin.com/in/felipe-soto-908077369</span>
+            <span class="desc">Mi perfil profesional</span>
+          </span>
+        </a>
+
+        <a class="tarjeta" href="https://github.com/Mephistoth" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>
+            <span class="etq">GitHub</span>
+            <span class="valor">github.com/Mephistoth</span>
+            <span class="desc">El código de mis proyectos</span>
+          </span>
+        </a>
+
       </div>
     </section>
   </main>
-
-  <footer>
-    <p>© 2026 Felipe Soto. Viña del Mar, Chile.</p>
-  </footer>
 </div>
+
+<footer>
+  <div class="wrap">
+    <p class="firma">Mephistoth</p>
+    <p class="derechos">© 2026 Mephistoth. Todos los derechos reservados.</p>
+  </div>
+</footer>
 
 <script>
 (function () {
+  /* Pestañas de la tarjeta de API */
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
   var ruta = document.getElementById('ruta');
 
@@ -354,6 +480,44 @@
       if (siguiente) { e.preventDefault(); activar(siguiente, true); }
     });
   });
+
+  /* Barra de avance de lectura */
+  var barra = document.getElementById('barra');
+  var pendiente = false;
+
+  function actualizarBarra() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
+    barra.style.transform = 'scaleX(' + p + ')';
+    pendiente = false;
+  }
+
+  function alScroll() {
+    if (!pendiente) { pendiente = true; window.requestAnimationFrame(actualizarBarra); }
+  }
+
+  window.addEventListener('scroll', alScroll, { passive: true });
+  window.addEventListener('resize', alScroll);
+  actualizarBarra();
+
+  /* Sección activa en el menú */
+  var enlaces = Array.prototype.slice.call(document.querySelectorAll('.top nav a'));
+  var secciones = enlaces.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) {
+          enlaces.forEach(function (a) {
+            a.removeAttribute('aria-current');
+            if (a.getAttribute('href') === '#' + e.target.id) a.setAttribute('aria-current', 'true');
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    secciones.forEach(function (s) { if (s) obs.observe(s); });
+  }
 })();
 </script>
 </body>
