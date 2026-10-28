@@ -1,133 +1,360 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felipe Soto — Backend & Full-Stack Developer</title>
-    <!-- Tailwind CSS para diseño moderno -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- Google Fonts: Inter para un look UI limpio -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
-        .code-font { font-family: 'Fira Code', monospace; }
-        .glass-card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(31, 41, 55, 0.6); backdrop-filter: blur(12px); }
-        .tech-tag { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #10b981; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Felipe Soto | Desarrollador Backend / Full-Stack Junior</title>
+<meta name="description" content="Portafolio de Felipe Soto, Analista Programador titulado de Duoc UC. Backend y full-stack junior con Python, Django, API REST y PostgreSQL. Viña del Mar, Chile.">
+<meta name="author" content="Felipe Soto">
+<meta name="theme-color" content="#0b2230">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="Felipe Soto | Desarrollador Backend / Full-Stack Junior">
+<meta property="og:description" content="Python, Django, API REST y PostgreSQL. Práctica profesional en desarrollo full-stack. Disponible de inmediato.">
+<meta property="og:url" content="https://mephistoth.github.io/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --mar: #0b2230;          /* fondo: mar profundo */
+    --roca: #12313f;         /* superficies */
+    --linea: #24505f;        /* bordes */
+    --espuma: #eaf3f0;       /* texto principal */
+    --bruma: #9db8bd;        /* texto secundario */
+    --arena: #f2c879;        /* acento */
+    --agua: #9be0cf;         /* valores en el código */
+    --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --texto: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    --codigo: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--mar);
+    color: var(--espuma);
+    font-family: var(--texto);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  [hidden] { display: none !important; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--arena); outline-offset: 3px; border-radius: 4px; }
+
+  .skip {
+    position: absolute; left: 1rem; top: -4rem;
+    background: var(--arena); color: var(--mar);
+    padding: .6rem 1rem; border-radius: 6px; font-weight: 600; z-index: 10;
+  }
+  .skip:focus { top: 1rem; }
+
+  .wrap { width: min(72rem, 100% - 3rem); margin-inline: auto; }
+
+  /* Encabezado */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 0; }
+  .mark { font-family: var(--display); font-weight: 700; font-size: 1.15rem; text-decoration: none; }
+  .top nav { display: flex; gap: 1.75rem; }
+  .top nav a { color: var(--bruma); text-decoration: none; font-size: .97rem; }
+  .top nav a:hover { color: var(--espuma); }
+
+  /* Hero */
+  .hero { display: grid; gap: 3rem; padding: 3rem 0 5rem; align-items: center; }
+  @media (min-width: 62rem) { .hero { grid-template-columns: 1.05fr 1fr; gap: 4rem; padding-top: 4.5rem; } }
+
+  h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3.25rem, 9vw, 6.25rem);
+    line-height: .95;
+    letter-spacing: -.035em;
+  }
+  .lead { margin: 0 0 1rem; max-width: 30em; font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.4; }
+  .avail { margin: 0 0 2rem; max-width: 34em; color: var(--bruma); }
+
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 2.9rem;
+    padding: 0 1.35rem; border-radius: 999px;
+    border: 1px solid var(--linea); text-decoration: none; font-weight: 600; font-size: .98rem;
+    transition: background-color .2s, border-color .2s, color .2s;
+  }
+  .btn:hover { border-color: var(--arena); color: var(--arena); }
+  .btn.principal { background: var(--arena); color: var(--mar); border-color: var(--arena); }
+  .btn.principal:hover { background: var(--espuma); border-color: var(--espuma); color: var(--mar); }
+
+  /* Respuesta de API (el momento memorable) */
+  .api { background: var(--roca); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; min-width: 0; }
+  .tabs { display: flex; gap: .25rem; padding: .6rem .6rem 0; border-bottom: 1px solid var(--linea); overflow-x: auto; }
+  .tabs button {
+    font: 500 .88rem var(--codigo); color: var(--bruma);
+    background: none; border: 0; border-bottom: 2px solid transparent;
+    padding: .55rem .85rem; cursor: pointer; white-space: nowrap;
+  }
+  .tabs button:hover { color: var(--espuma); }
+  .tabs button[aria-selected="true"] { color: var(--arena); border-bottom-color: var(--arena); }
+  .req { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem 1.1rem; font: 400 .85rem var(--codigo); color: var(--bruma); border-bottom: 1px solid var(--linea); }
+  .req .estado { color: var(--agua); }
+  pre.json { margin: 0; padding: 1.1rem 1.1rem 1.4rem; overflow-x: auto; font: 400 .9rem/1.7 var(--codigo); color: var(--espuma); tab-size: 2; }
+  .json .k { color: var(--arena); }
+  .json .s { color: var(--agua); }
+  .json .p { color: #6f8f98; }
+  .json a { color: var(--agua); text-decoration-color: #4a8a86; text-underline-offset: 3px; }
+  .json a:hover { color: var(--espuma); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .carga .linea { opacity: 0; transform: translateY(4px); animation: aparece .4s ease-out forwards; animation-delay: calc(var(--i) * 75ms + 350ms); }
+    @keyframes aparece { to { opacity: 1; transform: none; } }
+  }
+
+  /* Secciones */
+  section { padding: 3.5rem 0; border-top: 1px solid var(--linea); }
+  h2 { margin: 0 0 2rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.75rem, 3.5vw, 2.4rem); letter-spacing: -.02em; line-height: 1.1; }
+  h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em; }
+
+  /* Trayectoria: una secuencia real, por eso va como línea de tiempo */
+  .linea-tiempo { list-style: none; margin: 0; padding: 0; }
+  .linea-tiempo li { display: grid; gap: .35rem 2.5rem; padding: 0 0 2.5rem 1.5rem; border-left: 1px solid var(--linea); position: relative; }
+  .linea-tiempo li:last-child { padding-bottom: 0; }
+  .linea-tiempo li::before { content: ""; position: absolute; left: -5px; top: .55rem; width: 9px; height: 9px; border-radius: 50%; background: var(--arena); }
+  @media (min-width: 48rem) { .linea-tiempo li { grid-template-columns: 11rem 1fr; } }
+  .fecha { color: var(--bruma); font-size: .95rem; padding-top: .2rem; }
+  .linea-tiempo .donde { margin: .1rem 0 .75rem; color: var(--bruma); }
+  .linea-tiempo ul { margin: 0; padding-left: 1.15rem; max-width: 46rem; }
+  .linea-tiempo ul li { display: list-item; padding: 0 0 .4rem; border: 0; position: static; grid-template-columns: none; }
+  .linea-tiempo ul li::before { content: none; }
+  .linea-tiempo ul li::marker { color: var(--arena); }
+
+  /* Proyectos */
+  .destacado { background: var(--roca); border: 1px solid var(--linea); border-radius: 14px; padding: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
+  .destacado h3 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: .75rem; }
+  .destacado p { margin: 0 0 1.25rem; max-width: 40rem; }
+  .stack { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin: 0 0 1.5rem; padding: 0; }
+  .stack li { font: 400 .82rem var(--codigo); color: var(--agua); border: 1px solid var(--linea); border-radius: 6px; padding: .2rem .6rem; }
+  .enlace { color: var(--arena); font-weight: 600; text-underline-offset: 4px; }
+  .enlace:hover { color: var(--espuma); }
+
+  .filas { list-style: none; margin: 0; padding: 0; }
+  .filas li { display: grid; gap: .5rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--linea); }
+  .filas li:first-child { border-top: 1px solid var(--linea); }
+  @media (min-width: 48rem) { .filas li { grid-template-columns: 16rem 1fr auto; align-items: start; } }
+  .filas p { margin: 0; color: var(--bruma); max-width: 36rem; }
+  .filas .stack { margin: .75rem 0 0; }
+
+  /* Herramientas */
+  .grupos { display: grid; gap: 2rem 3rem; }
+  @media (min-width: 48rem) { .grupos { grid-template-columns: 1fr 1fr; } }
+  .grupos h3 { font-size: 1.1rem; margin-bottom: .35rem; }
+  .grupos p { margin: 0 0 .9rem; color: var(--bruma); max-width: 30rem; }
+  .grupos .stack { margin: 0; }
+
+  /* Contacto */
+  .contacto p { max-width: 34rem; margin: 0 0 2rem; font-size: 1.15rem; }
+
+  footer { border-top: 1px solid var(--linea); padding: 2rem 0 3rem; color: var(--bruma); font-size: .92rem; }
+</style>
 </head>
-<body class="text-gray-300 selection:bg-emerald-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-6 py-16 md:py-24 w-full flex-grow">
-        
-        <!-- Header / Hero Section -->
-        <header class="mb-16">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">Felipe Soto</h1>
-                    <p class="text-lg md:text-xl text-emerald-400 code-font font-medium">&lt;Backend & Full-Stack Junior /&gt;</p>
-                    <p class="text-gray-400 mt-2 flex items-center gap-2">
-                        <i class="fas fa-map-marker-alt text-gray-500"></i> Viña del Mar, Chile
-                    </p>
-                </div>
-                
-                <!-- Social Links Cortos y Elegantes -->
-                <div class="flex gap-4">
-                    <a href="https://github.com" target="_blank" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:felipeignacio28soto@gmail.com" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-xl text-gray-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" title="Email">
-                        <i class="far fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
-        </header>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 
-        <!-- Resumen / Acerca de mí -->
-        <section class="mb-16">
-            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-4 code-font">// Perfil Profesional</h2>
-            <p class="text-gray-400 leading-relaxed text-base md:text-lg">
-                Analista Programador Computacional titulado de Duoc UC. Especializado en ingeniería de backend, diseño de arquitecturas modulares y automatización de procesos mediante <span class="text-white font-medium">visión artificial en tiempo real</span>. Enfocado en construir APIs REST seguras, escalables y optimizar la persistencia de datos relacionales en entornos Cloud.
-            </p>
-        </section>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#">Felipe Soto</a>
+    <nav aria-label="Principal">
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
 
-        <!-- Stack Tecnológico Principal -->
-        <section class="mb-16">
-            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-4 code-font">// Core Stack</h2>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Python</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Django / DRF</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">API REST (JSON)</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">PostgreSQL</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">OpenCV</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Git & GitHub</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Render / Cloudinary</span>
-                <span class="px-3 py-1 rounded-md text-xs font-medium tech-tag code-font">Scrum</span>
-            </div>
-        </section>
+  <main id="contenido">
+    <div class="hero">
+      <div>
+        <h1>Felipe Soto</h1>
+        <p class="lead">Desarrollo backend con Python y Django: APIs REST, bases de datos relacionales y despliegue en la nube.</p>
+        <p class="avail">Analista Programador titulado de Duoc UC, con práctica profesional como desarrollador full-stack. Disponible de inmediato, en Viña del Mar o en remoto.</p>
+        <div class="actions">
+          <a class="btn principal" href="#proyectos">Ver proyectos</a>
+          <a class="btn" href="CV_Felipe_Soto_2026.pdf" download>Descargar CV</a>
+          <a class="btn" href="mailto:felipeignacio28soto@gmail.com">Escribirme</a>
+        </div>
+      </div>
 
-        <!-- Sección de Proyectos Minimalistas -->
-        <section class="mb-16">
-            <h2 class="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-6 code-font">// Proyectos e Impacto</h2>
-            <div class="grid grid-cols-1 gap-6">
-                
-                <!-- Proyecto 1: BotDigimonUp -->
-                <div class="p-6 rounded-2xl glass-card hover:border-gray-700/80 transition-all duration-300">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <span class="text-xs text-emerald-400 code-font mb-1 block">Proyecto Destacado / Automatización</span>
-                            <h3 class="text-xl font-bold text-white tracking-tight">Bot Isométrico v2.6 — Digimon UP</h3>
-                        </div>
-                        <a href="https://github.com/Mephistoth/BotDigimonUp" class="text-gray-500 hover:text-white transition-colors text-lg" title="Ver repositorio">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Software de automatización reactiva y enrutamiento inteligente basado en <strong class="text-gray-200 font-medium">procesamiento por visión artificial en tiempo real</strong>. Logra una ejecución de bajísima latencia (~15ms) e implementa inyección virtual de clics por hardware (ctypes) en segundo plano para emulación libre de bloqueos.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Python</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">OpenCV</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">ctypes</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Retro-engineering</span>
-                    </div>
-                </div>
+      <div class="api" role="group" aria-label="Mis datos como respuesta de una API">
+        <div class="tabs" role="tablist" aria-label="Endpoints">
+          <button role="tab" id="t-perfil" aria-selected="true" aria-controls="p-perfil" data-ruta="/api/felipe/perfil">/perfil</button>
+          <button role="tab" id="t-stack" aria-selected="false" aria-controls="p-stack" tabindex="-1" data-ruta="/api/felipe/stack">/stack</button>
+          <button role="tab" id="t-contacto" aria-selected="false" aria-controls="p-contacto" tabindex="-1" data-ruta="/api/felipe/contacto">/contacto</button>
+        </div>
+        <div class="req"><span id="ruta">GET /api/felipe/perfil</span><span class="estado">200 OK</span></div>
 
-                <!-- Proyecto 2: Práctica Permify -->
-                <div class="p-6 rounded-2xl glass-card hover:border-gray-700/80 transition-all duration-300">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <span class="text-xs text-gray-500 code-font mb-1 block">Práctica Profesional / Agencia Digital</span>
-                            <h3 class="text-xl font-bold text-white tracking-tight">Plataforma CCM & Analítica Industrial</h3>
-                        </div>
-                        <span class="text-xs font-semibold px-2 py-1 bg-gray-800 rounded-md text-gray-400 code-font" title="Propiedad de permify.cl"><i class="fas fa-lock text-[10px]"></i> Privado</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Co-desarrollo de la arquitectura modular (MVT) para un sistema web corporativo enfocado en automatización y simulación de ciclos de producción industriales. Diseño de endpoints en Django REST Framework para consumo estructurado (JSON) y optimización del backend.
-                    </p>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Django</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">PostgreSQL</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Render Cloud</span>
-                        <span class="px-2 py-0.5 rounded text-[11px] bg-gray-800 text-gray-400 code-font">Agile/Scrum</span>
-                    </div>
-                </div>
+<pre class="json carga" role="tabpanel" id="p-perfil" aria-labelledby="t-perfil" tabindex="0"><span class="linea" style="--i:0"><span class="p">{</span></span>
+<span class="linea" style="--i:1">  <span class="k">"nombre"</span><span class="p">:</span> <span class="s">"Felipe Soto"</span><span class="p">,</span></span>
+<span class="linea" style="--i:2">  <span class="k">"rol"</span><span class="p">:</span> <span class="s">"Desarrollador Backend / Full-Stack Junior"</span><span class="p">,</span></span>
+<span class="linea" style="--i:3">  <span class="k">"titulo"</span><span class="p">:</span> <span class="s">"Analista Programador, Duoc UC (2025)"</span><span class="p">,</span></span>
+<span class="linea" style="--i:4">  <span class="k">"practica"</span><span class="p">:</span> <span class="s">"Permify, remoto, oct-dic 2025"</span><span class="p">,</span></span>
+<span class="linea" style="--i:5">  <span class="k">"ubicacion"</span><span class="p">:</span> <span class="s">"Viña del Mar, Chile"</span><span class="p">,</span></span>
+<span class="linea" style="--i:6">  <span class="k">"disponibilidad"</span><span class="p">:</span> <span class="s">"inmediata"</span><span class="p">,</span></span>
+<span class="linea" style="--i:7">  <span class="k">"modalidad"</span><span class="p">:</span> <span class="p">[</span><span class="s">"remoto"</span><span class="p">,</span> <span class="s">"presencial en Viña y Valparaíso"</span><span class="p">]</span></span>
+<span class="linea" style="--i:8"><span class="p">}</span></span></pre>
 
-            </div>
-        </section>
+<pre class="json" role="tabpanel" id="p-stack" aria-labelledby="t-stack" tabindex="0" hidden><span class="p">{</span>
+  <span class="k">"backend"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Python"</span><span class="p">,</span> <span class="s">"Django"</span><span class="p">,</span> <span class="s">"Django REST Framework"</span><span class="p">,</span> <span class="s">"API REST"</span><span class="p">],</span>
+  <span class="k">"datos"</span><span class="p">:</span> <span class="p">[</span><span class="s">"PostgreSQL"</span><span class="p">,</span> <span class="s">"SQL"</span><span class="p">,</span> <span class="s">"SQLite"</span><span class="p">,</span> <span class="s">"Oracle"</span><span class="p">],</span>
+  <span class="k">"herramientas"</span><span class="p">:</span> <span class="p">[</span><span class="s">"Git"</span><span class="p">,</span> <span class="s">"GitHub"</span><span class="p">,</span> <span class="s">"Render"</span><span class="p">,</span> <span class="s">"Cloudinary"</span><span class="p">],</span>
+  <span class="k">"metodologia"</span><span class="p">:</span> <span class="s">"Scrum"</span><span class="p">,</span>
+  <span class="k">"automatizacion"</span><span class="p">:</span> <span class="p">[</span><span class="s">"OpenCV"</span><span class="p">,</span> <span class="s">"pyautogui"</span><span class="p">]</span>
+<span class="p">}</span></pre>
 
-    </main>
+<pre class="json" role="tabpanel" id="p-contacto" aria-labelledby="t-contacto" tabindex="0" hidden><span class="p">{</span>
+  <span class="k">"email"</span><span class="p">:</span> <span class="s">"<a href="mailto:felipeignacio28soto@gmail.com">felipeignacio28soto@gmail.com</a>"</span><span class="p">,</span>
+  <span class="k">"linkedin"</span><span class="p">:</span> <span class="s">"<a href="https://www.linkedin.com/in/felipe-soto-908077369/" target="_blank" rel="noopener">linkedin.com/in/felipe-soto-908077369</a>"</span><span class="p">,</span>
+  <span class="k">"github"</span><span class="p">:</span> <span class="s">"<a href="https://github.com/Mephistoth" target="_blank" rel="noopener">github.com/Mephistoth</a>"</span><span class="p">,</span>
+  <span class="k">"cv"</span><span class="p">:</span> <span class="s">"<a href="CV_Felipe_Soto_2026.pdf" download>CV_Felipe_Soto_2026.pdf</a>"</span>
+<span class="p">}</span></pre>
+      </div>
+    </div>
 
-    <!-- Footer Minimalista -->
-    <footer class="max-w-4xl mx-auto px-6 py-8 w-full border-t border-gray-900/60 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600 gap-2">
-        <p class="code-font">&copy; 2026 Felipe Soto. All rights reserved.</p>
-        <p>Built with Tailwind CSS & Inter Font</p>
-    </footer>
+    <section id="trayectoria">
+      <h2>Trayectoria</h2>
+      <ol class="linea-tiempo">
+        <li>
+          <span class="fecha">Oct 2025 – Dic 2025</span>
+          <div>
+            <h3>Desarrollador Full-Stack, práctica profesional</h3>
+            <p class="donde">Permify, en remoto</p>
+            <ul>
+              <li>Desarrollé una plataforma web en Django para automatizar, simular y gestionar ciclos de producción industriales.</li>
+              <li>Implementé una API REST con Django REST Framework que entrega datos en JSON a integraciones externas y futuras aplicaciones móviles.</li>
+              <li>Construí un panel de administración con métricas, autenticación segura y gestión de perfiles de usuario.</li>
+              <li>Desarrollé un módulo en Python que automatiza procesos internos, con el código organizado en arquitectura modular MVT.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <span class="fecha">Mar 2025 – Jul 2025</span>
+          <div>
+            <h3>Proyecto de título: El Club del Gran Gusano</h3>
+            <p class="donde">Duoc UC, Viña del Mar</p>
+            <ul>
+              <li>Desarrollé en equipo una aplicación web con Django, con registro y login, CRUD, chat y chatbot.</li>
+              <li>Diseñé la base de datos en PostgreSQL, integré Cloudinary para las imágenes y desplegué en Render.</li>
+              <li>Trabajé con Scrum y Git/GitHub: más de 30 commits y pull requests.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <span class="fecha">2023 – 2025</span>
+          <div>
+            <h3>Analista Programador Computacional</h3>
+            <p class="donde">Duoc UC, Técnico de Nivel Superior</p>
+            <ul>
+              <li>Módulos certificados: Arquitectura de Software, Calidad de Software, Modelos de Datos, Programación de Software y Análisis de Requerimientos.</li>
+              <li>Inglés intermedio certificado.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
 
+    <section id="proyectos">
+      <h2>Proyectos</h2>
+
+      <article class="destacado">
+        <h3>Ciclo-Circular</h3>
+        <p>Plataforma web para automatizar, simular y gestionar ciclos de producción industriales. La desarrollé durante mi práctica profesional, con una API REST, un panel de administración y un módulo de automatización en Python.</p>
+        <ul class="stack" aria-label="Tecnologías">
+          <li>Python</li><li>Django</li><li>Django REST Framework</li><li>API REST</li>
+        </ul>
+        <a class="enlace" href="https://github.com/Mephistoth/Ciclo-Circular" target="_blank" rel="noopener">Ver el código en GitHub</a>
+      </article>
+
+      <ul class="filas">
+        <li>
+          <h3>El Club del Gran Gusano</h3>
+          <div>
+            <p>Aplicación web hecha en equipo con registro y login, CRUD, chat y chatbot. Desplegada en Render.</p>
+            <ul class="stack" aria-label="Tecnologías"><li>Django</li><li>PostgreSQL</li><li>Cloudinary</li><li>Render</li></ul>
+          </div>
+          <a class="enlace" href="https://github.com/Mephistoth/ClubDelGranGusano" target="_blank" rel="noopener">Ver código</a>
+        </li>
+        <li>
+          <h3>Bot de automatización con visión por computador</h3>
+          <div>
+            <p>Un bot que lee la pantalla con OpenCV, decide la siguiente acción y la ejecuta. Lo he mejorado en varias versiones para que sea más rápido y más estable.</p>
+            <ul class="stack" aria-label="Tecnologías"><li>Python</li><li>OpenCV</li><li>pyautogui</li></ul>
+          </div>
+          <a class="enlace" href="https://github.com/Mephistoth/BotDigimonUp" target="_blank" rel="noopener">Ver código</a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="herramientas">
+      <h2>Herramientas</h2>
+      <div class="grupos">
+        <div>
+          <h3>Con las que trabajo a diario</h3>
+          <p>Las que usé en mi práctica y en mi proyecto de título.</p>
+          <ul class="stack"><li>Python</li><li>Django</li><li>Django REST Framework</li><li>PostgreSQL</li><li>SQL</li><li>Git y GitHub</li><li>Scrum</li></ul>
+        </div>
+        <div>
+          <h3>Con las que he trabajado</h3>
+          <p>Las que he usado en la carrera y en proyectos propios.</p>
+          <ul class="stack"><li>JavaScript</li><li>HTML y CSS</li><li>Bootstrap</li><li>Angular</li><li>Ionic</li><li>Firebase</li><li>Java</li><li>Oracle</li><li>SQLite</li><li>OpenCV</li><li>Render</li><li>Cloudinary</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="contacto">
+      <h2>Contacto</h2>
+      <p>Busco mi primera oportunidad como desarrollador junior. Si tienes una vacante o un proyecto, escríbeme y respondo pronto.</p>
+      <div class="actions">
+        <a class="btn principal" href="mailto:felipeignacio28soto@gmail.com">Escribirme un correo</a>
+        <a class="btn" href="https://www.linkedin.com/in/felipe-soto-908077369/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/Mephistoth" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="CV_Felipe_Soto_2026.pdf" download>Descargar CV</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Felipe Soto. Viña del Mar, Chile.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var ruta = document.getElementById('ruta');
+
+  function activar(tab, enfocar) {
+    tabs.forEach(function (t) {
+      var activo = t === tab;
+      t.setAttribute('aria-selected', activo ? 'true' : 'false');
+      t.tabIndex = activo ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !activo;
+    });
+    ruta.textContent = 'GET ' + tab.getAttribute('data-ruta');
+    if (enfocar) tab.focus();
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activar(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      var siguiente = null;
+      if (e.key === 'ArrowRight') siguiente = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') siguiente = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (siguiente) { e.preventDefault(); activar(siguiente, true); }
+    });
+  });
+})();
+</script>
 </body>
 </html>
